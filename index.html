@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Bloc — Protege tu mente</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --orange: #FF6B00;
+            --orange-light: #FF8C33;
+            --black: #0D0D0D;
+            --surface: #1A1A1A;
+            --card: #222222;
+            --text: #FFFFFF;
+            --text-secondary: #AAAAAA;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--black);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,107,0,0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 28px;
+            margin-bottom: 32px;
+            animation: floatLogo 3s ease-in-out infinite;
+            box-shadow: 0 0 60px rgba(255,107,0,0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(56px, 12vw, 96px);
+            letter-spacing: 4px;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero-title span:first-child { color: var(--orange); }
+        .hero-title span:last-child { color: var(--text); }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 3vw, 20px);
+            color: var(--text-secondary);
+            margin: 16px 0 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--orange);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            animation: fadeUp 0.8s 0.4s ease both;
+            box-shadow: 0 8px 32px rgba(255,107,0,0.4);
+        }
+
+        .btn-download:hover {
+            background: var(--orange-light);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(255,107,0,0.5);
+        }
+
+        .btn-download svg { width: 24px; height: 24px; }
+
+        .hero-note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            animation: fadeUp 0.8s 0.6s ease both;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(36px, 6vw, 56px);
+            text-align: center;
+            margin-bottom: 48px;
+            letter-spacing: 3px;
+        }
+
+        .section-title span { color: var(--orange); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid rgba(255,107,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-card.visible {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(255,107,0,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(255,107,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* PREMIUM */
+        .premium {
+            padding: 80px 20px;
+            background: var(--surface);
+        }
+
+        .premium-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .premium-badge {
+            display: inline-block;
+            background: rgba(255,107,0,0.15);
+            border: 1px solid var(--orange);
+            color: var(--orange);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .premium-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 80px;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .premium-price span {
+            font-size: 32px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+        }
+
+        .premium-desc {
+            color: var(--text-secondary);
+            margin: 16px 0 32px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .premium-features {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .premium-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .premium-features li span:first-child {
+            color: var(--orange);
+            font-size: 18px;
+        }
+
+        /* MOTIVATE */
+        .motivate {
+            padding: 80px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .verse-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,107,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verse-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 160px;
+            color: rgba(255,107,0,0.08);
+            font-family: 'Bebas Neue', sans-serif;
+            line-height: 1;
+        }
+
+        .verse-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .verse-ref {
+            margin-top: 20px;
+            color: var(--orange);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        footer a { color: var(--orange); text-decoration: none; }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .btn-download { padding: 16px 28px; font-size: 16px; }
+            .premium-price { font-size: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <img src="logo.png" alt="Block Bloc" class="logo">
+        <h1 class="hero-title">
+            <span>Block</span> <span>Bloc</span>
+        </h1>
+        <p class="hero-subtitle">Protege tu mente · Recupera tu libertad</p>
+        <a href="blockbloc.apk" class="btn-download" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Descargar para Android
+        </a>
+        <p class="hero-note">Gratis · Android 8.0+ · Sin suscripciones</p>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <h2 class="section-title reveal">Por que <span>Block Bloc</span>?</h2>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">Bloqueo inteligente</div>
+                <div class="feature-desc">Bloquea cientos de sitios pornograficos automaticamente. Sin configuracion complicada.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">VPN local</div>
+                <div class="feature-desc">Funciona en segundo plano sin consumir datos. Tu privacidad esta protegida.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Modo estricto</div>
+                <div class="feature-desc">Con el modo premium, la app no se puede desinstalar. Decision definitiva para los mas comprometidos.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">📖</div>
+                <div class="feature-title">Motivate diario</div>
+                <div class="feature-desc">Versiculos biblicos y frases motivadoras cada dia para mantenerte enfocado en tu meta.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-title">URLs personalizadas</div>
+                <div class="feature-desc">Agrega cualquier sitio que quieras bloquear ademas de la lista predeterminada.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">💪</div>
+                <div class="feature-title">100% gratuito</div>
+                <div class="feature-desc">Sin anuncios invasivos, sin suscripciones. Solo un pago unico opcional para el modo estricto.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM -->
+    <section class="premium">
+        <div class="premium-inner reveal">
+            <div class="premium-badge">Modo Estricto</div>
+            <h2 class="section-title"><span>S/</span> 3.50</h2>
+            <div class="premium-price" style="font-size:20px; color: var(--text-secondary); font-family: Inter; font-weight: 300;">pago unico · para toda la vida</div>
+            <p class="premium-desc">Para los que van en serio. Una sola decision que lo cambia todo.</p>
+            <ul class="premium-features">
+                <li><span>🔒</span> La app no se puede desinstalar</li>
+                <li><span>♾️</span> Sin renovaciones ni cobros extra</li>
+                <li><span>🛡️</span> Proteccion permanente garantizada</li>
+                <li><span>🎯</span> Para quienes toman decisiones definitivas</li>
+            </ul>
+            <a href="blockbloc.apk" class="btn-download" download style="display:inline-flex">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Descargar gratis
+            </a>
+        </div>
+    </section>
+
+    <!-- MOTIVATE -->
+    <section class="motivate">
+        <h2 class="section-title reveal">Tu <span>fuerza</span> diaria</h2>
+        <div class="verse-card reveal">
+            <p class="verse-text">"No os ha sobrevenido ninguna tentacion que no sea humana; pero fiel es Dios, que no os dejara ser tentados mas de lo que podeis resistir."</p>
+            <p class="verse-ref">1 Corintios 10:13</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Block Bloc © 2025 · Hecho con ❤️ para quienes quieren ser libres</p>
+        <p style="margin-top:8px">Soporte: <a href="mailto:aaraujoquispe900@gmail.com">aaraujoquispe900@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
